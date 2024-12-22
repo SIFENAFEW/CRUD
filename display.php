@@ -5,21 +5,33 @@ $password = "";
 $dbname = "crudopretion";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+include 'connect.php';
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT id, name, mobile, email FROM crud";
+$sql = "SELECT * FROM crud";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<table border='1'><tr><th>ID</th><th>Name</th><th>mobile</th><th>Email</th></tr>";
+    echo "<table border='1'><tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>mobile</th>
+    <th>Email</th>
+    <th>password</th>
+    <th>Opretion</th>
+    </tr>";
     // Output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>" . $row["id"]. "</td><td>" . $row["name"]. "</td><td>" . $row["mobile"]. "</td><td>". $row["email"]. "</td></tr>";
+        echo "<tr>
+        <td>" . $row["id"]. "</td>
+        <td>" . $row["name"]. "</td>
+        <td>" . $row["mobile"]. "</td>
+        <td>". $row["email"]. "</td>
+        <td>". $row["password"]. "</td>
+        <td>
+        <button><a href='update.php?updateid=".$row["id"]."'>Update</a></button>
+        <button><a href='delete.php?deleteid=".$row["id"]."'>Delete</a></button>
+        </td>
+        </tr>";
     }
     echo "</table>";
 } else {

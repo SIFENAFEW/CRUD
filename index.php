@@ -1,7 +1,10 @@
 <?php
 
 include 'connect.php';
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) 
+    if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['mobile']) || empty($_POST['password'])) {
+        echo "All fields are required.";
+    } else {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
@@ -10,7 +13,8 @@ if (isset($_POST['submit'])) {
     values('$name','$email','$mobile','$password')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        echo "Data inserted successfully";
+       // echo "Data inserted successfully";
+        header('Location:display.php');
     } else {
         die(mysqli_error($conn));
     }
@@ -33,7 +37,6 @@ if (isset($_POST['submit'])) {
 
         <label for="name">Name:</label><br>
         <input type="text" id="name" name="name"><br><br>
-
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email"><br><br>
 
